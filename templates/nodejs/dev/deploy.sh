@@ -4,7 +4,7 @@
 . /var/cache/opdemand/inputs.sh
 
 # check for debug flag
-if [ $server_debug == "True" ] ; then
+if [ $server_debug = "True" ] ; then
     debug_flag="-d"
 else
     debug_flag="-v"

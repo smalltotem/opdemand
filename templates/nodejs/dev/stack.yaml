@@ -1,0 +1,31 @@
+name: Node.js Development
+path: nodejs/dev
+config: [ aws, base, network, server ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: http
+    port: 8080
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Server
+    description: Provides generic services
+    components:
+      aws-instance:
+        name: Server
+        config:
+          server/hostname: test-name 
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 3000

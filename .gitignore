@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+build
+.project
+.pydevproject
+*.komodoproject
+.komodotools
+.settings
+.DS_Store
+_trial_temp*

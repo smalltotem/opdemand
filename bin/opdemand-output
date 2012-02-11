@@ -1,0 +1,29 @@
+#!/usr/bin/python
+import json
+import sys
+    
+output_path = "/var/cache/opdemand/outputs.json"
+ 
+def output(key, val):
+  # read current outputs
+  try:
+    with open(output_path) as f:
+      data = f.read()
+      outputs = json.loads(data)
+  except:
+      outputs = {}
+  # append the new output
+  outputs[key] = val
+  # write out new outputs
+  with open(output_path, 'w') as f:
+    data = json.dumps(outputs)
+    f.write(data)
+  return outputs
+
+if __name__ == '__main__':
+  # check usage
+  if len(sys.argv) != 3:
+    sys.stderr.write('usage: %%s [key] [value]\n' % sys.argv[0])
+    sys.exit(1)
+  # call output
+  output(sys.argv[1], sys.argv[2])

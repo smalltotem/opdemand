@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -ex
 
 # write out inputs for shell sourcing
 python -c '
@@ -10,16 +10,16 @@ with open("/var/cache/opdemand/inputs.json") as f:
   inputs = json.loads(data)
 # write out env vars
 with open("/var/cache/opdemand/inputs.sh", "w") as f:
-  f.write("/bin/sh\n")
+  f.write("#!/bin/sh\n")
   for k, v in iter(inputs.items()):
     key = k.replace("/", "_").lower()
-    f.write("%%(key)s=%%(val)s\n")
+    f.write("%s=\"%s\"\n" % (key, v))
 '
 
 # link all scripts to public path
-for $script in `ls /var/lib/opdemand/bin`; do
-  ln -s /var/cache/opdemand/$script /usr/local/bin/$script
+for script in `ls /var/lib/opdemand/bin`; do
+  ln -fs /var/lib/opdemand/bin/$script /usr/local/bin/$script
 done
 
 # run the build
-opdemand-build
+/usr/local/bin/opdemand-build

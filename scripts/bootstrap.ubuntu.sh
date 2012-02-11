@@ -21,5 +21,4 @@ for script in `ls /var/lib/opdemand/bin`; do
   ln -fs /var/lib/opdemand/bin/$script /usr/local/bin/$script
 done
 
-# run the build
-/usr/local/bin/opdemand-build
+# /usr/local/bin/opdemand-build will be triggered

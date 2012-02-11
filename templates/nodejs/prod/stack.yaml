@@ -1,5 +1,5 @@
 name: Node.js with PostgreSQL (2-node)
-path: nodejs/dev
+path: nodejs/prod
 config: [ aws, base, network, server, database, application ]
 network:
   admin:

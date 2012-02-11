@@ -5,7 +5,7 @@ cd /var/lib/opdemand
 git pull
 
 # source orchestration inputs as environment vars
-source /var/cache/opdemand/inputs.sh
+. /var/cache/opdemand/inputs.sh
 
 # use relative path to find/exec script as root
 templates/$platform_path/$server_build_script 2>&1 | tee -a /var/log/opdemand/build.log

@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 # source opdemand common and env vars
-source /var/cache/opdemand/inputs.sh
+. /var/cache/opdemand/inputs.sh
 
 # check for debug flag
 if [ $server_debug ]; then

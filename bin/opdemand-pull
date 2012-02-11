@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# update server repository
+cd /var/lib/opdemand
+git pull
+
+# update puppet modules if they exist
+if [ -d /usr/share/puppet/modules ] ; then
+    cd /usr/share/puppet/modules
+    git pull
+fi

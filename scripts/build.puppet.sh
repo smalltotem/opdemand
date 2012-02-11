@@ -3,8 +3,8 @@
 # This script runs as "root" on first boot typically
 # invoked by cloud-init's runcmd.
 
-# NOTE: variables that start with a percent-sign will be substituted
-# Use double-percent to escape percent signs.
+# source orchestration inputs as environment vars
+. /var/cache/opdemand/inputs.sh
 
 # set locale for calls that require encoding
 export LANG=en_US.UTF-8

@@ -1,10 +1,7 @@
 #!/bin/sh
 
-# source orchestration inputs as environment vars
-. /var/cache/opdemand/inputs.sh
-
 # refresh repository
 sudo opdemand-pull
 
 # use relative path to find/exec script as root
-sudo templates/$platform_path/$server_deploy_script 2>&1 | tee -a /var/log/opdemand/deploy.log
+sudo /var/lib/opdemand/templates/$platform_path/$server_deploy_script 2>&1 | tee -a /var/log/opdemand/deploy.log

@@ -23,7 +23,7 @@ stack:
       aws-instance:
         name: Server
         config:
-          server/hostname: test-name 
+          server/hostname: node
           server/build_script: build.sh
           server/deploy_script: deploy.sh
     monitor:

@@ -1,3 +1,4 @@
+#!/bin/sh
 # OpDemand bootstrap script for Puppet-managed servers
 # This script runs as "root" on first boot typically
 # invoked by cloud-init's runcmd.

@@ -21,7 +21,7 @@ stack:
     description: Provides generic services
     components:
       aws-instance:
-        name: Server
+        name: Node.js Server
         config:
           server/hostname: node
           server/build_script: build.sh

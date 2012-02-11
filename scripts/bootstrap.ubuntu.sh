@@ -1,4 +1,3 @@
-#!/bin/sh -e
 
 # write out inputs for shell sourcing
 python -c '

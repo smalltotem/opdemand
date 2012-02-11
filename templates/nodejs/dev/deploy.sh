@@ -1,14 +1,14 @@
-#!/bin/sh -ex
+#!/bin/sh -e
 
 # source opdemand common and env vars
 . /var/cache/opdemand/inputs.sh
 
 # check for debug flag
 if [ $server_debug ]; then
-    puppet_cmd="puppet apply -d"
+    debug_flag="-d"
 else
-    puppet_cmd="puppet apply -v" 
+    debug_flag="-v"
 fi
 
 # execute puppet apply
-$puppet_cmd -e 'opdemand::web::nodejs'
+puppet apply $debug_flag -e 'include opdemand::web::nodejs'

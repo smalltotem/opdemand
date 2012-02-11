@@ -28,4 +28,4 @@ stack:
           server/deploy_script: deploy.sh
     monitor:
       protocol: tcp
-      port: 3000
+      port: 22

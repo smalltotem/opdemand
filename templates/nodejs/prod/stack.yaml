@@ -1,0 +1,43 @@
+name: Node.js with PostgreSQL (2-node)
+path: nodejs/dev
+config: [ aws, base, network, server, database, application ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: http
+    port: 8080
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Database
+    description: Provides database services
+    components:
+      aws-instance:
+        name: PostgreSQL
+        config:
+          server/hostname: postgres
+          server/build_script: build.sh
+          server/deploy_script: deploy.db.sh
+    monitor:
+      protocol: tcp
+      port: 22
+  - name: Application
+    description: Provides application services
+    components:
+      aws-instance:
+        name: Node.js
+        config:
+          server/hostname: node
+          server/build_script: build.sh
+          server/deploy_script: deploy.app.sh
+    monitor:
+      protocol: tcp
+      port: 22

@@ -9,7 +9,6 @@ with open("/var/cache/opdemand/inputs.json") as f:
   inputs = json.loads(data)
 # write out env vars
 with open("/var/cache/opdemand/inputs.sh", "w") as f:
-  f.write("#!/bin/sh\n")
   for k, v in iter(inputs.items()):
     key = k.replace("/", "_").lower()
     f.write("%s=\"%s\"\n" % (key, v))

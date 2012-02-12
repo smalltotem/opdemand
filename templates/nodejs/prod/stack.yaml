@@ -28,7 +28,7 @@ stack:
           server/deploy_script: deploy.db.sh
     monitor:
       protocol: tcp
-      port: 22
+      port: 5432
   - name: Application
     description: Provides application services
     components:

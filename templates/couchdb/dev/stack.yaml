@@ -1,0 +1,32 @@
+name: CouchDB Development
+path: couchdb/dev
+config: [ aws, base, network, server, database ]
+network:
+  admin:
+    protocol: http
+    port: 5984
+  access:
+    protocol: http
+    port: 5984
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Database
+    description: Provides database services
+    components:
+      aws-instance:
+        name: CouchDB
+        config:
+          server/hostname: couchdb
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 5984
+

@@ -1,0 +1,32 @@
+name: MySQL Development
+path: mysql/dev
+config: [ aws, base, network, server, database ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: mysql
+    port: 3306
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Database
+    description: Provides database services
+    components:
+      aws-instance:
+        name: MySQL
+        config:
+          server/hostname: mysql
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 3306
+

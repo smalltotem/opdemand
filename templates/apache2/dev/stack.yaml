@@ -1,0 +1,32 @@
+name: Apache2 Development
+path: apache2/dev
+config: [ aws, base, network, server ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: http
+    port: 80
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Server
+    description: Provides generic services
+    components:
+      aws-instance:
+        name: Ubuntu
+        config:
+          server/hostname: ubuntu
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 80
+

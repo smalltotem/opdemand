@@ -21,9 +21,9 @@ stack:
     description: Provides generic services
     components:
       aws-instance:
-        name: Ubuntu
+        name: Apache2
         config:
-          server/hostname: ubuntu
+          server/hostname: apache2
           server/build_script: build.sh
           server/deploy_script: deploy.sh
     monitor:

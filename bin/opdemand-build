@@ -1,9 +1,17 @@
-
 # source orchestration inputs as environment vars
 . /var/cache/opdemand/inputs.sh
 
 # refresh repository
 sudo opdemand-pull
 
+# check for a url
+is_url=`python -c "print \"$server_build_script\".startswith(\"http\")"`
+if [ $is_url = True ] ; then
+    curl -s -o /var/cache/opdemand/build $server_build_script
+else
+    cp /var/lib/opdemand/templates/$platform_path/$server_build_script /var/cache/opdemand/build
+fi
+
 # use relative path to find/exec script as root
-sudo /var/lib/opdemand/templates/$platform_path/$server_build_script 2>&1 | tee -a /var/log/opdemand/build.log
+chmod +x /var/cache/opdemand/build
+sudo /var/cache/opdemand/build 2>&1 | tee -a /var/log/opdemand/build.log

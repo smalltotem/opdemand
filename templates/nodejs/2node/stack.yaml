@@ -1,0 +1,37 @@
+name: Node.js (2-node)
+path: nodejs/2node
+config: [ aws, base, network, server, application ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: http
+    port: 3000
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Server
+    description: Provides generic services
+    components:
+      aws-instance-1:
+        name: "Node.js 1"
+        config:
+          server/hostname: node2
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+      aws-instance-2:
+        name: "Node.js 2"
+        config:
+          server/hostname: node2
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 22

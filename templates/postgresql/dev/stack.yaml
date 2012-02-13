@@ -1,0 +1,32 @@
+name: PostgreSQL Development
+path: postgresql/dev
+config: [ aws, base, network, server, database ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: tcp
+    port: 5432
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Database
+    description: Provides database services
+    components:
+      aws-instance:
+        name: PostgreSQL
+        config:
+          server/hostname: postgres
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 5432
+

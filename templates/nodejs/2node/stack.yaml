@@ -26,12 +26,30 @@ stack:
           server/hostname: node2
           server/build_script: build.sh
           server/deploy_script: deploy.sh
+          application/repository_url: git://github.com/opdemand/c2-nodejs-helloworld.git
+        output:
+          lb/instances: [ instance_id ]
       aws-instance-2:
         name: "Node.js 2"
         config:
           server/hostname: node2
           server/build_script: build.sh
           server/deploy_script: deploy.sh
+          application/repository_url: git://github.com/opdemand/c2-nodejs-helloworld.git
+        output:
+          lb/instances: [ instance_id ]
     monitor:
       protocol: tcp
-      port: 22
+      port: 3000
+  - name: Load Balancing
+    description: Provides load balancing services
+    components:
+      aws-elb:
+        name: "ELB"
+        config:
+          lb/listeners: [ "(80, 3000, TCP)" ]
+          lb/target: HTTP:3000/
+    monitor:
+      protocol: tcp
+      port: 80
+      target: dns_name

@@ -1,0 +1,32 @@
+name: Buildbot Development
+path: buildbot/dev
+config: [ aws, base, network, server ]
+network:
+  admin:
+    protocol: ssh
+    port: 22
+  access:
+    protocol: http
+    port: 8010
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      aws-keypair:
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      aws-sg:
+  - name: Server
+    description: Provides buildbot services
+    components:
+      aws-instance:
+        name: Buildbot
+        config:
+          server/hostname: buildbot
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: http
+      port: 8010
+

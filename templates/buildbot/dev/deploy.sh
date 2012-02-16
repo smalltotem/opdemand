@@ -38,7 +38,8 @@ if [ ! -e /home/buildslave/slave ]; then
     echo '@reboot /usr/local/bin/buildslave start /home/buildslave/slave' | crontab -u buildslave -
 fi
 
-sudo -u buildmaster cat > /home/buildmaster/master/master.cfg <<EOF
+if [ ! -e /home/buildmaster/master/master.cfg ]; then
+    sudo -u buildmaster cat > /home/buildmaster/master/master.cfg <<EOF
 # -*- python -*-
 # ex: set syntax=python:
 
@@ -159,6 +160,7 @@ c['buildbotURL'] = "http://localhost:8010/"
 c['db_url'] = "sqlite:///state.sqlite"
 
 EOF
+fi
 
 sudo -u buildmaster buildbot restart /home/buildmaster/master
 sudo -u buildslave buildslave restart /home/buildslave/slave

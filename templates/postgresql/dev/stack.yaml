@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.PostgresqlDevTest -*-
 name: PostgreSQL Development
 path: postgresql/dev
 config: [ aws, base, network, server, database ]

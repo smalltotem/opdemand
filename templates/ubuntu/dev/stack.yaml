@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.UbuntuDevTest -*-
 name: Ubuntu Oneiric Development
 path: ubuntu/dev
 config: [ aws, base, network, server ]

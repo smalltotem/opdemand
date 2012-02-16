@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.Nodejs2nodeTest -*-
 name: Node.js (2-node)
 path: nodejs/2node
 config: [ aws, base, network, server, application ]

@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.MysqlDevTest -*-
 name: MySQL Development
 path: mysql/dev
 config: [ aws, base, network, server, database ]

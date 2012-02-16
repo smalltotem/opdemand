@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.NodejsDevTest -*-
 name: Node.js Development
 path: nodejs/dev
 config: [ aws, base, network, server ]

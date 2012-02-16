@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.Apache2DevTest -*-
 name: Apache2 Development
 path: apache2/dev
 config: [ aws, base, network, server ]

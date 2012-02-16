@@ -1,3 +1,4 @@
+# -*- test-case-name: c2server.tests.platform.CouchdbDevTest -*-
 name: CouchDB Development
 path: couchdb/dev
 config: [ aws, base, network, server, database ]

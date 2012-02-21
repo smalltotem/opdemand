@@ -19,7 +19,11 @@ sudo apt-get install python-twisted python-twisted-bin python-twisted-conch pyth
 # Install latest buildbot from the cheeseshop
 sudo easy_install buildbot buildbot-slave
 
-BUILDBOT_PASSWORD=`python -c "import random, string; print ''.join(random.choice(string.letters+string.digits) for _ in xrange(12))"`
+if [ ! -e $HOME/.buildbot_password ]; then
+    BUILDBOT_PASSWORD=`python -c "import random, string; print ''.join(random.choice(string.letters+string.digits) for _ in xrange(12))"`
+    echo $BUILDBOT_PASSWORD > $HOME/.buildbot_password
+fi
+BUILDBOT_PASSWORD=`cat $HOME/.buildbot_password`
 
 # create buildmaster env
 if [ ! -e /home/buildmaster/master ]; then

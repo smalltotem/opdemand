@@ -1,33 +1,38 @@
 # -*- test-case-name: c2server.tests.platform.Apache2DevTest -*-
 name: Apache2 Development
 path: apache2/dev
-config: [ aws, base, network, server ]
-network:
-  admin:
-    protocol: ssh
-    port: 22
-  access:
-    protocol: http
-    port: 80
+include: [ aws, base, network, server ]
+config:
+  network/access_port: 80
+  network/admin_port: 22
 stack:
   - name: Security
     description: Provides security infrastructure
     components:
-      aws-keypair:
+      - type: aws-keypair
   - name: Network
     description: Provides network infrastructure
     components:
-      aws-sg:
+      - type: aws-sg
   - name: Server
     description: Provides generic services
     components:
-      aws-instance:
+      - type: aws-instance
         name: Apache2
         config:
           server/hostname: apache2
           server/build_script: build.sh
           server/deploy_script: deploy.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
     monitor:
       protocol: tcp
       port: 80
-
+publish:
+  - name: Admin URL
+    description: URL used to administer this service
+    template: ssh://ubuntu@%(network/admin_host)s
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s

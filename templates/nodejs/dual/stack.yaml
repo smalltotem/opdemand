@@ -1,42 +1,39 @@
 # -*- test-case-name: c2server.tests.platform.Nodejs2nodeTest -*-
-name: Node.js (2-node)
-path: nodejs/2node
-config: [ aws, base, network, server, application ]
-network:
-  admin:
-    protocol: ssh
-    port: 22
-  access:
-    protocol: http
-    port: 3000
+name: Node.js Dual-node with ELB
+path: nodejs/dual
+include: [ aws, base, network, server, application ]
+config:
+  network/access_port: 80
+  network/admin_port: 22
+  application/repository_url: git://github.com/opdemand/c2-nodejs-helloworld.git
 stack:
   - name: Security
     description: Provides security infrastructure
     components:
-      aws-keypair:
+      - type: aws-keypair
   - name: Network
     description: Provides network infrastructure
     components:
-      aws-sg:
+      - type: aws-sg
   - name: Server
     description: Provides generic services
     components:
-      aws-instance-1:
-        name: "Node.js 1"
+      - type: aws-instance
+        name: Node.js 1
         config:
-          server/hostname: node2
+          server/hostname: node1
           server/build_script: build.sh
           server/deploy_script: deploy.sh
-          application/repository_url: git://github.com/opdemand/c2-nodejs-helloworld.git
         output:
           lb/instances: [ instance_id ]
-      aws-instance-2:
-        name: "Node.js 2"
+          # make the first node the admin host
+          network/admin_host: public_dns_name
+      - type: aws-instance
+        name: Node.js 2
         config:
           server/hostname: node2
           server/build_script: build.sh
           server/deploy_script: deploy.sh
-          application/repository_url: git://github.com/opdemand/c2-nodejs-helloworld.git
         output:
           lb/instances: [ instance_id ]
     monitor:
@@ -45,12 +42,21 @@ stack:
   - name: Load Balancing
     description: Provides load balancing services
     components:
-      aws-elb:
-        name: "ELB"
+      - type: aws-elb
+        name: ELB
         config:
           lb/listeners: [ "(80, 3000, TCP)" ]
           lb/target: HTTP:3000/
+        output:
+          network/access_host: dns_name
     monitor:
       protocol: tcp
       port: 80
       target: dns_name
+publish:
+  - name: Admin URL
+    description: URL used to administer this service
+    template: ssh://ubuntu@%(network/admin_host)s:%(network/admin_port)d
+  - name: Access URL
+    description: URL used to access this service
+    template: mysql://%(network/access_host)s:%(network/access_port)d

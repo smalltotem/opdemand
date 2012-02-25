@@ -1,33 +1,39 @@
 # -*- test-case-name: c2server.tests.platform.CouchdbDevTest -*-
 name: CouchDB Development
 path: couchdb/dev
-config: [ aws, base, network, server, database ]
-network:
-  admin:
-    protocol: http
-    port: 5984
-  access:
-    protocol: http
-    port: 5984
+include: [ aws, base, network, server, database ]
+config:
+  network/access_port: 5984
+  network/admin_port: 5984
 stack:
   - name: Security
     description: Provides security infrastructure
     components:
-      aws-keypair:
+      - type: aws-keypair
   - name: Network
     description: Provides network infrastructure
     components:
-      aws-sg:
+      - type: aws-sg
   - name: Database
     description: Provides database services
     components:
-      aws-instance:
-        name: CouchDB
+      - name: CouchDB
+        description: EC2 instance that runs CouchDB service
+        type: aws-instance
         config:
           server/hostname: couchdb
           server/build_script: build.sh
           server/deploy_script: deploy.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
     monitor:
       protocol: tcp
       port: 5984
-
+publish:
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s:5984/_utils
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s:5984

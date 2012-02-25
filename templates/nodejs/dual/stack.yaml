@@ -1,4 +1,4 @@
-# -*- test-case-name: c2server.tests.platform.Nodejs2nodeTest -*-
+# -*- test-case-name: c2server.tests.platform.NodejsDualTest -*-
 name: Node.js Dual-node with ELB
 path: nodejs/dual
 include: [ aws, base, network, server, application ]

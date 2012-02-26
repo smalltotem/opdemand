@@ -2,7 +2,7 @@
 . /var/cache/opdemand/inputs.sh
 
 # refresh repository
-sudo opdemand-pull
+opdemand-pull
 
 # check for a url
 is_url=`python -c "print \"$server_deploy_script\".startswith(\"http\")"`
@@ -14,4 +14,4 @@ fi
 
 # use relative path to find/exec script as root
 chmod +x /var/cache/opdemand/deploy
-sudo /var/cache/opdemand/deploy 2>&1 | tee -a /var/log/opdemand/deploy.log
+/var/cache/opdemand/deploy 2>&1 | tee -a /var/log/opdemand/deploy.log

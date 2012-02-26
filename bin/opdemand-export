@@ -9,6 +9,15 @@ with open("/var/cache/opdemand/inputs.json") as f:
   
 # write out env vars for inclusion
 with open("/var/cache/opdemand/inputs.sh", "w") as f:
-  for k, v in iter(inputs.items()):
-    key = k.replace("/", "_").lower()
-    f.write("%s=\"%s\"\n" % (key, v))
+  keys = inputs.keys()
+  keys.sort()
+  for key in keys:
+      k = key.replace("/", "_".lower())
+      val = inputs[key]
+      # space-separate lists
+      if isinstance(val, list):
+          v = ' '.join(val)
+      else:
+          v = val
+      # SECURITY: command injection very possible, make sure you trust source data
+      f.write("%s='%s'\n" % (k, v))

@@ -1,5 +1,5 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlElb2x1Test -*-
-name: Django/PostgreSQL 2app x 1db with ELB
+name: Django/PostgreSQL 2x1 with ELB
 path: django/postgresql/elb2x1
 include: [ aws, base, network, server, database, application ]
 config:
@@ -32,12 +32,17 @@ stack:
     description: Provides database services
     components:
       - type: aws-instance
-        name: Django
+        name: Django 1
         config:
-          server/hostname: django
+          server/hostname: django1
           server/build_script: build.sh
           server/deploy_script: deploy.app.sh
-        output:
+      - type: aws-instance
+        name: Django 2
+        config:
+          server/hostname: django2
+          server/build_script: build.sh
+          server/deploy_script: deploy.app.sh
     monitor:
       protocol: tcp
       port: 8080

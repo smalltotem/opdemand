@@ -23,6 +23,9 @@ stack:
           server/hostname: ubuntu
           server/build_script: build.sh
           server/deploy_script: deploy.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
     monitor:
       protocol: tcp
       port: 22

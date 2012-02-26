@@ -11,4 +11,6 @@ else
 fi
 
 # execute puppet apply
-puppet apply $debug_flag -e 'include opdemand::framework::django::postgresql'
+puppet apply $debug_flag -e '
+class {"opdemand::database::postgresql":} ->
+class {"opdemand::framework::django::postgresql"}'

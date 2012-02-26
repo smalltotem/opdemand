@@ -1,3 +1,5 @@
+# export orchestration vars
+/usr/local/bin/opdemand-export
 
 # source orchestration inputs as environment vars
 . /var/cache/opdemand/inputs.sh

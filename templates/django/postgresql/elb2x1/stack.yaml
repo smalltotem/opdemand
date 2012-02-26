@@ -37,12 +37,16 @@ stack:
           server/hostname: django1
           server/build_script: build.sh
           server/deploy_script: deploy.app.sh
+        output:
+          lb/instances: [ instance_id ]
       - type: aws-instance
         name: Django 2
         config:
           server/hostname: django2
           server/build_script: build.sh
           server/deploy_script: deploy.app.sh
+        output:
+          lb/instances: [ instance_id ]
     monitor:
       protocol: tcp
       port: 8080

@@ -1,6 +1,6 @@
-# -*- test-case-name: c2server.tests.platform.DjangoPostgresqlDevTest -*-
-name: Django/PostgreSQL Dual Node
-path: django/postgresql/dual
+# -*- test-case-name: c2server.tests.platform.DjangoPostgresql1x1Test -*-
+name: Django/PostgreSQL 1x1
+path: django/postgresql/1x1
 include: [ aws, base, network, server, database, application ]
 config:
   network/access_port: 8080

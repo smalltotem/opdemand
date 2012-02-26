@@ -3,7 +3,7 @@ name: Django/PostgreSQL 2x1 with ELB
 path: django/postgresql/elb2x1
 include: [ aws, base, network, server, database, application ]
 config:
-  network/access_port: 8080
+  network/access_port: 80
   network/admin_port: 22
   database/username: django
   database/password: changeme123.
@@ -68,7 +68,7 @@ stack:
 publish:
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s:%(network/access_port)d
+    template: http://%(network/access_host)s
   - name: Admin URL
     description: URL used to administer this service
-    template: http://%(network/admin_host)s:%(network/access_port)d/admin/
+    template: http://%(network/admin_host)s/admin/

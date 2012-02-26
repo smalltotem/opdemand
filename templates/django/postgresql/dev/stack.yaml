@@ -33,9 +33,9 @@ stack:
       protocol: tcp
       port: 8080
 publish:
-  - name: Admin URL
-    description: URL used to administer this service
-    template: ssh://ubuntu@%(network/admin_host)s
   - name: Access URL
     description: URL used to access this service
     template: http://%(network/access_host)s:%(network/access_port)d
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s:%(network/access_port)d/admin/

@@ -24,7 +24,7 @@ stack:
         name: PostgreSQL
         config:
           server/hostname: postgres
-          server/build_script: build.db.sh
+          server/build_script: build.sh
           server/deploy_script: deploy.db.sh
         output:
           database/host: public_dns_name
@@ -35,7 +35,7 @@ stack:
         name: Django
         config:
           server/hostname: django
-          server/build_script: build.app.sh
+          server/build_script: build.sh
           server/deploy_script: deploy.app.sh
         output:
           network/access_host: public_dns_name
@@ -44,9 +44,9 @@ stack:
       protocol: tcp
       port: 8080
 publish:
-  - name: Admin URL
-    description: URL used to administer this service
-    template: http://%(network/admin_host)s/admin/
   - name: Access URL
     description: URL used to access this service
     template: http://%(network/access_host)s:%(network/access_port)d
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s:%(network/access_port)d/admin/

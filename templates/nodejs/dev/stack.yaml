@@ -1,5 +1,10 @@
 # -*- test-case-name: c2server.tests.platform.NodejsDevTest -*-
 name: Node.js Development
+description: >
+             Node.js development environment consisting of a Key Pair, Security Group and
+             EC2 instance.  Installs latest compiled node available via Ubuntu PPAs.
+             Starts a Node.js upstart daemon listening on 3000/tcp, powered by a
+             configurable GitHub repository.
 path: nodejs/dev
 include: [ aws, base, network, server, application ]
 config:

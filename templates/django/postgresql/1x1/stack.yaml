@@ -19,6 +19,8 @@ stack:
       - type: aws-sg
   - name: Database
     description: Provides database services
+    config:
+      aws/zone_name: us-east-1a
     components:
       - type: aws-instance
         name: PostgreSQL
@@ -34,6 +36,7 @@ stack:
       - type: aws-instance
         name: Django
         config:
+          aws/zone_name: us-east-1b
           server/hostname: django
           server/build_script: build.sh
           server/deploy_script: deploy.app.sh

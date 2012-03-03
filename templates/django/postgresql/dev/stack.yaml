@@ -1,7 +1,7 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlDevTest -*-
 name: Django/PostgreSQL Development
 path: django/postgresql/dev
-include: [ aws, base, network, server, database, application ]
+include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 8080
   network/admin_port: 22

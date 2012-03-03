@@ -1,7 +1,7 @@
 # -*- test-case-name: c2server.tests.platform.NodejsProdTest -*-
 name: Node.js with PostgreSQL (2-node)
 path: nodejs/prod
-include: [ aws, base, network, server, database, application ]
+include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 3000
   network/admin_port: 22

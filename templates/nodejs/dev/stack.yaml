@@ -6,7 +6,7 @@ description: >
              Starts a Node.js upstart daemon listening on 3000/tcp, powered by a
              configurable GitHub repository.
 path: nodejs/dev
-include: [ aws, base, network, server, application ]
+include: [ aws, base, network, server, puppet, puppet, application ]
 config:
   network/access_port: 3000
   network/admin_port: 22

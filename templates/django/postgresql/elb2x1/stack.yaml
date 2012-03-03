@@ -1,7 +1,7 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlElb2x1Test -*-
 name: Django/PostgreSQL 2x1 with ELB
 path: django/postgresql/elb2x1
-include: [ aws, base, network, server, database, application ]
+include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 80
   network/admin_port: 22

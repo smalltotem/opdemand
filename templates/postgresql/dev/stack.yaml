@@ -1,7 +1,7 @@
 # -*- test-case-name: c2server.tests.platform.PostgresqlDevTest -*-
 name: PostgreSQL Development
 path: postgresql/dev
-include: [ aws, base, network, server, database ]
+include: [ aws, base, network, server, puppet, database ]
 config:
   network/access_port: 5432
   network/admin_port: 22

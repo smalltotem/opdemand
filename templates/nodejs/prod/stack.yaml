@@ -50,7 +50,7 @@ publish:
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Database Admin URL
     description: URL used to access this service
-    template: ssh://%(database/host)s:%(network/admin_port)d
+    template: ssh://%(database/host)s:%(network/admin_port)s
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s:%(network/access_port)d
+    template: http://%(network/access_host)s:%(network/access_port)s

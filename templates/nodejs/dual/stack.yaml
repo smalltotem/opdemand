@@ -59,4 +59,4 @@ publish:
     template: ssh://ubuntu@%(network/admin_host)s:%(network/admin_port)s
   - name: Access URL
     description: URL used to access this service
-    template: mysql://%(network/access_host)s:%(network/access_port)s
+    template: http://%(network/access_host)s:%(network/access_port)s

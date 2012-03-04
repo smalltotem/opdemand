@@ -7,7 +7,7 @@ config:
   network/admin_port: 22
   database/username: django
   database/password: changeme123.
-  application/repository_url: git://github.com/gabrtv/c2-django-helloworld.git
+  application/repository_url: git://github.com/opdemand/c2-django-helloworld.git
 stack:
   - name: Security
     description: Provides security infrastructure

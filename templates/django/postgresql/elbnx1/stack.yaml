@@ -1,0 +1,67 @@
+# -*- test-case-name: c2server.tests.platform.DjangoPostgresqlElbnx1Test -*-
+name: Django/PostgreSQL Nx1 with ELB
+path: django/postgresql/elbnx1
+include: [ aws, base, network, server, puppet, database, application, autoscaler]
+config:
+  network/access_port: 80
+  network/admin_port: 22
+  database/username: django
+  database/password: changeme123.
+  application/repository_url: git://github.com/opdemand/c2-django-helloworld.git
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      - type: aws-keypair
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      - type: aws-sg
+  - name: Database
+    description: Provides database services
+    components:
+      - type: aws-instance
+        name: PostgreSQL
+        config:
+          server/hostname: postgres
+          server/build_script: build.sh
+          server/deploy_script: deploy.db.sh
+        output:
+          database/host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 5432
+  - name: Autoscaler
+    description: Provides web services
+    components:
+      - type: aws-autoscaler
+        name: Django
+        config:
+          server/hostname: django
+          server/build_script: build.sh
+          server/deploy_script: deploy.app.sh
+    monitor:
+      protocol: tcp
+      port: 8080
+  - name: Load Balancing
+    description: Provides load balancing services
+    components:
+      - type: aws-elb
+        name: ELB
+        config:
+          lb/listeners: [ "(80, 8080, TCP)" ]
+          lb/target: HTTP:8080/
+        output:
+          network/access_host: dns_name
+          network/admin_host: dns_name
+    monitor:
+      protocol: tcp
+      port: 80
+      target: dns_name
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s/admin/

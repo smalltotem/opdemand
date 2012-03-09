@@ -39,4 +39,4 @@ publish:
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s:%(network/access_port)s
+    template: postgresql://%(network/access_host)s:%(network/access_port)s/

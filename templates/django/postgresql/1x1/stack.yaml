@@ -1,5 +1,11 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresql1x1Test -*-
 name: Django/PostgreSQL 1x1
+description: >
+             Django environment consisting of a Key Pair, Security Group, and
+             two EC2 instances. Installs the PostgreSQL database on one
+             instance and the Django web framework on the other. Starts the
+             Django dev server running at 8080/tcp, powered by a configurable
+             GitHub repository.
 path: django/postgresql/1x1
 include: [ aws, base, network, server, puppet, database, application ]
 config:

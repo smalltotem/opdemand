@@ -1,5 +1,9 @@
 # -*- test-case-name: c2server.tests.platform.UbuntuDevTest -*-
 name: Ubuntu Oneiric Development
+description: >
+             Ubuntu development environment consisting of a Key Pair, Security
+             Group, and an EC2 instance. Installs an Ubuntu Oneiric server,
+             powered by a configurable GitHub repository.
 path: ubuntu/dev
 include: [ aws, base, network, server ]
 config:

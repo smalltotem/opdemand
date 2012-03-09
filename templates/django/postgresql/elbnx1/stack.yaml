@@ -1,5 +1,12 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlElbnx1Test -*-
 name: Django/PostgreSQL Nx1 with ELB
+description: >
+             Django environment consisting of a Key Pair, Security Group, an
+             AutoScaler, and a load balancer. Installs the PostgreSQL
+             database on one instance and the Django web framework on any
+             instances created by the autoscaler. Sets up the load balancer to
+             distribute traffic among all Django dev servers, listening at
+             80/tcp, powered by a configurable GitHub repository.
 path: django/postgresql/elbnx1
 include: [ aws, base, network, server, puppet, database, application, autoscaler]
 config:

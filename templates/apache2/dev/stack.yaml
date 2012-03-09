@@ -1,5 +1,9 @@
 # -*- test-case-name: c2server.tests.platform.Apache2DevTest -*-
 name: Apache2 Development
+description: >
+             Apache2 development environment consisting of a Key Pair, Security
+             Group, and an EC2 instance. Installs the Apache2 web server
+             listening at 80/tcp, powered by a configurable GitHub repository.
 path: apache2/dev
 include: [ aws, base, network, server ]
 config:

@@ -1,5 +1,9 @@
 # -*- test-case-name: c2server.tests.platform.MysqlDevTest -*-
 name: MySQL Development
+description: >
+             MySQL development environment consisting of a Key Pair, Security
+             Group, and an EC2 instance. Installs a MySQL server listening at
+             3306/tcp, powered by a configurable GitHub repository.
 path: mysql/dev
 include: [ aws, base, network, server, puppet, database ]
 config:

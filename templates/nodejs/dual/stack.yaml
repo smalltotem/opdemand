@@ -1,5 +1,11 @@
 # -*- test-case-name: c2server.tests.platform.NodejsDualTest -*-
 name: Node.js Dual-node with ELB
+description: >
+             Node.js dual server environment consisting of a Key Pair, Security
+             Group, two EC2 instances, and a load balancer. Installs latest
+             compiled node available via Ubuntu PPAs. Starts a Node.js upstart
+             daemon listening on 3000/tcp, powered by a configurable
+             GitHub repository.
 path: nodejs/dual
 include: [ aws, base, network, server, puppet, application ]
 config:

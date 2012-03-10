@@ -18,7 +18,7 @@ sudo apt-get install python-setuptools python-virtualenv gcc python-dev -yq --fo
 
 virtualenv --no-site-packages pyramid_dev
 cd pyramid_dev
-source bin/activate
+. bin/activate
 bin/easy_install pyramid
 
 cat > helloworld.py <<EOF
@@ -41,4 +41,3 @@ EOF
 
 pkill "python helloworld.py"
 python helloworld.py &
-

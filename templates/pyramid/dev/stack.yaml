@@ -39,4 +39,4 @@ publish:
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s/8080/hello/world
+    template: http://%(network/access_host)s:8080/hello/world

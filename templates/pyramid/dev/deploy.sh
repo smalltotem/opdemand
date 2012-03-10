@@ -16,7 +16,11 @@ sudo apt-get install fail2ban -yq --force-yes
 # install pyramid prerequisites
 sudo apt-get install python-setuptools python-virtualenv gcc python-dev -yq --force-yes
 
-virtualenv --no-site-packages pyramid_dev
+# create buildmaster env
+if [ ! -e $HOME/pyramid_dev ]; then
+    virtualenv --no-site-packages pyramid_dev
+fi
+
 cd pyramid_dev
 . bin/activate
 bin/easy_install pyramid
@@ -39,5 +43,4 @@ if __name__ == '__main__':
 
 EOF
 
-pkill "python helloworld.py"
-python helloworld.py &
+sudo restart pyramid_dev

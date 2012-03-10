@@ -22,3 +22,18 @@ EOF
 chown -R ubuntu.ubuntu /home/ubuntu/.ssh
 chmod 600 /home/ubuntu/.ssh/known_hosts
 
+# write out upstart daemons
+cat > /etc/init/pyramid_dev.conf <<EOF
+#!upstart
+description "pyramid web dev daemon"
+author      "OpDemand"
+
+start on (local-filesystems and net-device-up IFACE=eth0)
+stop on shutdown
+
+script
+   cd /home/ubuntu/pyramid_dev
+   . bin/activate
+   exec bin/python helloworld.py 2>&1 >> /var/log/pyramid_dev.log
+end script
+EOF

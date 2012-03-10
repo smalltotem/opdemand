@@ -43,4 +43,5 @@ if __name__ == '__main__':
 
 EOF
 
-sudo restart pyramid_dev
+sudo stop pyramid_dev
+sudo start pyramid_dev

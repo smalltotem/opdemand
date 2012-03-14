@@ -1,36 +1,30 @@
-# -*- test-case-name: c2server.tests.platform.Apache2DevTest -*-
-name: Apache2 Development
+# -*- test-case-name: c2server.tests.platform.PyramidDevTest -*-
+name: Pyramid Web Development
 description: >
-             Apache2 development environment consisting of a Key Pair, Security
-             Group, and an EC2 instance. Installs the Apache2 web server
-             listening at 80/tcp, powered by a configurable GitHub repository.
-path: apache2/dev
+             Pyramid python web development environment consisting of a Key
+             Pair, Security Group, and an EC2 instance. Installs an Ubuntu
+             Oneiric server with Pyramid, powered by a configurable GitHub repository.
+path: pyramid/dev
 include: [ aws, base, network, server ]
 config:
-  network/access_port: 80
+  network/access_port: 22
   network/admin_port: 22
 stack:
   - name: Security
     description: Provides security infrastructure
-    include: [ ] 
     components:
       - type: aws-keypair
-        include: [ ] 
   - name: Network
     description: Provides network infrastructure
-    include: [ ] 
     components:
       - type: aws-sg
-        include: [ network ] 
   - name: Server
     description: Provides generic services
-    include: [ ] 
     components:
       - type: aws-instance
-        name: Apache2
-        include: [ network, server, aws ] 
+        name: Ubuntu
         config:
-          server/hostname: apache2
+          server/hostname: ubuntu
           server/build_script: build.sh
           server/deploy_script: deploy.sh
         output:
@@ -38,11 +32,11 @@ stack:
           network/admin_host: public_dns_name
     monitor:
       protocol: tcp
-      port: 80
+      port: 22
 publish:
   - name: Admin URL
     description: URL used to administer this service
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s
+    template: http://%(network/access_host)s:8080/hello/world

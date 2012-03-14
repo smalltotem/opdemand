@@ -1,5 +1,10 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlDevTest -*-
 name: Django/PostgreSQL Development
+description: >
+             Django development environment consisting of a Key Pair,
+             Security Group, and an EC2 instance. Installs Django and a
+             PostgreSQL database. Starts the Django dev server running at
+             8080/tcp, powered by a configurable GitHub repository.
 path: django/postgresql/dev
 include: [ aws, base, network, server, puppet, database, application ]
 config:
@@ -7,7 +12,7 @@ config:
   network/admin_port: 22
   database/username: django
   database/password: changeme123.
-  application/repository_url: git://github.com/gabrtv/c2-django-helloworld.git
+  application/repository_url: git://github.com/opdemand/c2-django-helloworld.git
 stack:
   - name: Security
     description: Provides security infrastructure

@@ -1,5 +1,12 @@
 # -*- test-case-name: c2server.tests.platform.DjangoPostgresqlElb2x1Test -*-
 name: Django/PostgreSQL 2x1 with ELB
+description: >
+             Django environment consisting of a Key Pair, Security Group, three
+             EC2 instances, and a load balancer. Installs the PostgreSQL
+             database on one instance and the Django web framework on the
+             other two. Sets up the load balancer to distribute traffic between
+             the two Django dev servers, listening at 80/tcp, powered by a
+             configurable GitHub repository.
 path: django/postgresql/elb2x1
 include: [ aws, base, network, server, puppet, database, application ]
 config:
@@ -7,7 +14,7 @@ config:
   network/admin_port: 22
   database/username: django
   database/password: changeme123.
-  application/repository_url: git://github.com/gabrtv/c2-django-helloworld.git
+  application/repository_url: git://github.com/opdemand/c2-django-helloworld.git
 stack:
   - name: Security
     description: Provides security infrastructure

@@ -1,5 +1,10 @@
 # -*- test-case-name: c2server.tests.platform.BuildbotDevTest -*-
 name: Buildbot Development
+description: >
+             Buildbot development environment consisting of a Key Pair, Security
+             Group, and an EC2 instance. Installs the Buildbot CI server with
+             a web status site listening at 8010/tcp, powered by a configurable
+             GitHub repository.
 path: buildbot/dev
 include: [ aws, base, network, server ]
 config:

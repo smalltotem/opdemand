@@ -1,5 +1,9 @@
 # -*- test-case-name: c2server.tests.platform.PostgresqlDevTest -*-
 name: PostgreSQL Development
+description: >
+             PostgreSQL development environment consisting of a Key Pair,
+             Security Group, and an EC2 instance. Installs a PostgreSQL server
+             listening at 5432/tcp, powered by a configurable GitHub repository.
 path: postgresql/dev
 include: [ aws, base, network, server, puppet, database ]
 config:
@@ -41,4 +45,4 @@ publish:
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s:%(network/access_port)s
+    template: postgresql://%(network/access_host)s:%(network/access_port)s/

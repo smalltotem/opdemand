@@ -8,16 +8,22 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ]
     components:
       - type: aws-keypair
+        include: [ ]
   - name: Network
     description: Provides network infrastructure
+    include: [ ]
     components:
       - type: aws-sg
+        include: [ network ]
   - name: Database
     description: Provides database services
+    include: [ ]
     components:
       - name: CouchDB
+        include: [ network, server, puppet, aws, database ]
         description: EC2 instance that runs CouchDB service
         type: aws-instance
         config:

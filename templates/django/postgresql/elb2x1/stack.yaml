@@ -11,16 +11,22 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ]
     components:
       - type: aws-keypair
+        include: [ ]
   - name: Network
     description: Provides network infrastructure
+    include: [ ]
     components:
       - type: aws-sg
+        include: [ network ]
   - name: Database
     description: Provides database services
+    include: [ ]
     components:
       - type: aws-instance
+        include: [ aws, network, server, puppet, database ]
         name: PostgreSQL
         config:
           server/hostname: postgres
@@ -33,8 +39,10 @@ stack:
       port: 5432
   - name: Application
     description: Provides database services
+    include: [ ]
     components:
       - type: aws-instance
+        include: [ aws, network, server, puppet, application ]
         name: Django 1
         config:
           server/hostname: django1
@@ -43,6 +51,7 @@ stack:
         output:
           lb/instances: [ instance_id ]
       - type: aws-instance
+        include: [ aws, network, server, puppet, application ]
         name: Django 2
         config:
           server/hostname: django2
@@ -55,8 +64,10 @@ stack:
       port: 8080
   - name: Load Balancing
     description: Provides load balancing services
+    include: [ ] 
     components:
       - type: aws-elb
+        include: [ ] 
         name: ELB
         config:
           lb/listeners: [ "(80, 8080, TCP)" ]

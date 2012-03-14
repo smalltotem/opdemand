@@ -8,16 +8,22 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ] 
     components:
       - type: aws-keypair
+        include: [ ] 
   - name: Network
     description: Provides network infrastructure
+    include: [ ] 
     components:
       - type: aws-sg
+        include: [ network ] 
   - name: Database
     description: Provides database services
+    include: [ ] 
     components:
       - type: aws-instance
+        include: [ aws, network, server, puppet, database ] 
         name: MySQL
         config:
           server/hostname: mysql

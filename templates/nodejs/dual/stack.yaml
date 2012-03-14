@@ -9,16 +9,22 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ] 
     components:
       - type: aws-keypair
+        include: [ ] 
   - name: Network
     description: Provides network infrastructure
+    include: [ ] 
     components:
       - type: aws-sg
+        include: [ network ] 
   - name: Server
     description: Provides generic services
+    include: [ ] 
     components:
       - type: aws-instance
+        include: [ aws, network, server, puppet, application ] 
         name: Node.js 1
         config:
           server/hostname: node1
@@ -29,6 +35,7 @@ stack:
           # make the first node the admin host
           network/admin_host: public_dns_name
       - type: aws-instance
+        include: [ aws, network, server, puppet, application ] 
         name: Node.js 2
         config:
           server/hostname: node2
@@ -41,8 +48,10 @@ stack:
       port: 3000
   - name: Load Balancing
     description: Provides load balancing services
+    include: [ ] 
     components:
       - type: aws-elb
+        include: [ ] 
         name: ELB
         config:
           lb/listeners: [ "(80, 3000, TCP)" ]

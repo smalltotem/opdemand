@@ -8,17 +8,23 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ] 
     components:
       - type: aws-keypair
+        include: [ ] 
   - name: Network
     description: Provides network infrastructure
+    include: [ ] 
     components:
       - type: aws-sg
+        include: [ network ] 
   - name: Server
     description: Provides generic services
+    include: [ ] 
     components:
       - type: aws-instance
         name: Apache2
+        include: [ network, server, aws ] 
         config:
           server/hostname: apache2
           server/build_script: build.sh

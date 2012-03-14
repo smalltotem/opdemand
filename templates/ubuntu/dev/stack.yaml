@@ -8,16 +8,22 @@ config:
 stack:
   - name: Security
     description: Provides security infrastructure
+    include: [ ]
     components:
       - type: aws-keypair
+        include: [ ]
   - name: Network
     description: Provides network infrastructure
+    include: [ ] 
     components:
       - type: aws-sg
+        include: [ network ] 
   - name: Server
     description: Provides generic services
+    include: [ ] 
     components:
       - type: aws-instance
+        include: [ aws, network, server ] 
         name: Ubuntu
         config:
           server/hostname: ubuntu

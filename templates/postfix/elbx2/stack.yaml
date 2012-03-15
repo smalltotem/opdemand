@@ -1,0 +1,60 @@
+# -*- test-case-name: c2server.tests.platform.PostfixElbx2Test -*-
+name: Postfix ELBx2
+description: >
+             Postfix cluster consisting of a Key Pair, Security Group, 2 instances
+             and a load balancer. Installs the Postfix mail server on all instances
+             Sets up the load balancer to distribute traffic among all Postfix servers, listening on 25/tcp.
+path: postfix/elbx2
+include: [ aws, base, network, server, puppet]
+config:
+  network/access_port: 25
+  network/admin_port: 22
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      - type: aws-keypair
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      - type: aws-sg
+  - name: Service
+    description: Provides SMTP services
+    components:
+      - type: aws-instance
+        name: Postfix 1
+        config:
+          server/hostname: postfix1
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+        output:
+          lb/instances: [ instance_id ]
+      - type: aws-instance
+        name: Postfix 2
+        config:
+          server/hostname: postfix2
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+        output:
+          lb/instances: [ instance_id ]
+    monitor:
+      protocol: tcp
+      port: 25
+  - name: Load Balancing
+    description: Provides load balancing services
+    components:
+      - type: aws-elb
+        name: ELB
+        config:
+          lb/listeners: [ "(25, 25, TCP)", "(22, 22, TCP)" ]
+          lb/target: TCP:25
+        output:
+          network/access_host: dns_name
+          network/admin_host: dns_name
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: smtp://%(network/access_host)s:%(network/access_port)s
+  - name: Admin URL
+    description: URL used to administer this service
+    template: ssh://%(network/admin_host)s

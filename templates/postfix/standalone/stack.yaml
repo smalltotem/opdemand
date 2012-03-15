@@ -1,0 +1,45 @@
+# -*- test-case-name: c2server.tests.platform.PostfixStandaloneTest -*-
+name: Postfix Standalone with Elastic IP
+description: >
+             Postfix cluster consisting of a Key Pair, Security Group, Elastic IP
+             and a single server instance. Installs the Postfix mail server and
+             configures it to listening on 25/tcp.
+path: postfix/standalone
+include: [ aws, base, network, server, puppet]
+config:
+  network/access_port: 25
+  network/admin_port: 22
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      - type: aws-keypair
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      - type: aws-sg
+      - type: aws-eip
+        output:
+          eip/dns_name: dns_name
+          eip/public_ip: public_ip
+  - name: Service
+    description: Provides SMTP services
+    components:
+      - type: aws-instance
+        name: Postfix
+        config:
+          server/hostname: postfix
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+        input:
+          elastic_ip: eip/public_ip
+    monitor:
+      protocol: tcp
+      port: 22
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: smtp://%(network/access_host)s:%(network/access_port)s
+  - name: Admin URL
+    description: URL used to administer this service
+    template: ssh://%(network/admin_host)s

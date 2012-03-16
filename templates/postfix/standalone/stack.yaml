@@ -22,6 +22,8 @@ stack:
         output:
           eip/dns_name: dns_name
           eip/public_ip: public_ip
+          network/access_host: dns_name
+          network/admin_host: dns_name
   - name: Service
     description: Provides SMTP services
     components:

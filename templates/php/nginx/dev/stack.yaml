@@ -5,10 +5,11 @@ description: >
              Group, and an EC2 instance. Installs the Nginx web server
              listening at 80/tcp, powered by a configurable GitHub repository.
 path: php/nginx/dev
-include: [ aws, base, network, server ]
+include: [ aws, base, network, server, application ]
 config:
   network/access_port: 80
   network/admin_port: 22
+  application/repository_url: git://github.com/opdemand/c2-lamp-php.git
 stack:
   - name: Security
     description: Provides security infrastructure
@@ -28,7 +29,7 @@ stack:
     components:
       - type: aws-instance
         name: Nginx
-        include: [ network, server, aws ] 
+        include: [ network, server, aws, application ] 
         config:
           server/hostname: nginx 
           server/build_script: build.sh

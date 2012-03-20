@@ -1,0 +1,71 @@
+# -*- test-case-name: c2server.tests.platform.PhpMySql1x1Test -*-
+name: Nginx/PHP/MySQL 1x1
+description: >
+             PHP environment consisting of a Key Pair, Security Group, and
+             two EC2 instances. Installs the MySQL database on one
+             instance and the Nginx web server (with PHP and FastCGI) on the other.
+             Nginx server listens on 80/tcp. Powered by a configurable GitHub repository.
+path: php/mysql/1x1
+include: [ aws, base, network, server, puppet, database, application ]
+config:
+  network/access_port: 80
+  network/admin_port: 22
+  database/username: mysql_user
+  database/password: changeme123.
+  application/repository_url: git://github.com/opdemand/c2-lamp-php.git
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    include: [ ]
+    components:
+      - type: aws-keypair
+        include: [ ]
+  - name: Network
+    description: Provides network infrastructure
+    include: [ ]
+    components:
+      - type: aws-sg
+        include: [ network  ]
+  - name: Database
+    description: Provides database services
+    include: [ ]
+    components:
+      - type: aws-instance
+        include: [ database, aws, server, puppet  ]
+        name: MySQL
+        config:
+          server/hostname: mysql
+          server/build_script: build.sh
+          server/deploy_script: deploy.db.sh
+        output:
+          database/host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 3306
+  - name: Application
+    description: Provides database services
+    include: [ ]
+    components:
+      - type: aws-instance
+        include: [ application, aws, server, puppet  ]
+        name: Nginx
+        config:
+          server/hostname: nginx
+          server/build_script: build.sh
+          server/deploy_script: deploy.app.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 80
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s:%(network/access_port)s
+  - name: Database Admin URL
+    description: URL used to access the database server
+    template: ssh://ubuntu@%(database/host)s
+  - name: Application Admin URL
+    description: URL used to administer this service
+    template: ssh://%(network/admin_host)s

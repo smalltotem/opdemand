@@ -1,11 +1,11 @@
-# -*- test-case-name: c2server.tests.platform.DjangoPostgresqlDevTest -*-
-name: Django/PostgreSQL Development
+# -*- test-case-name: c2server.tests.platform.DjangoPostgresql1nodeTest -*-
+name: Django/PostgreSQL 1-node
 description: >
-             Django development environment consisting of a Key Pair,
+             Single node Django environment consisting of a Key Pair,
              Security Group, and an EC2 instance. Installs Django and a
              PostgreSQL database. Starts the Django dev server running at
              8080/tcp, powered by a configurable GitHub repository.
-path: django/postgresql/dev
+path: django/postgresql/1node
 include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 8080

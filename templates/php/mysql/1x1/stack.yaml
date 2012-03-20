@@ -1,5 +1,5 @@
 # -*- test-case-name: c2server.tests.platform.PhpMySql1x1Test -*-
-name: Nginx/PHP/MySQL 1x1
+name: PHP/MySQL 1x1
 description: >
              PHP environment consisting of a Key Pair, Security Group, and
              two EC2 instances. Installs the MySQL database on one
@@ -48,7 +48,7 @@ stack:
     components:
       - type: aws-instance
         include: [ aws, server, puppet, application ]
-        name: Nginx/PHP
+        name: PHP
         config:
           server/hostname: app
           server/build_script: build.sh

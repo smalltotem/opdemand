@@ -1,5 +1,5 @@
 # -*- test-case-name: c2server.tests.platform.PhpMysql1nodeTest -*-
-name: PHP/MySQL 1 Node
+name: PHP/MySQL 1-node
 description: >
              Single node PHP environment consisting of a Key Pair, Security
              Group, and a single EC2 instance. Installs the Nginx web server,

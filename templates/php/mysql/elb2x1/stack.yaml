@@ -45,7 +45,7 @@ stack:
       protocol: tcp
       port: 3306
   - name: Application
-    description: Provides database services
+    description: Provides application services
     include: [ ]
     components:
       - type: aws-instance

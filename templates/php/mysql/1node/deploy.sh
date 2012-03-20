@@ -11,4 +11,7 @@ else
 fi
 
 # execute puppet apply
-puppet apply $debug_flag -e 'include opdemand::framework::php'
+puppet apply $debug_flag -e '
+include opdemand::database::mysql
+include opdemand::framework::php
+'

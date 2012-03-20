@@ -1,0 +1,75 @@
+# -*- test-case-name: c2server.tests.platform.PhpMysqlElbnx1Test -*-
+name: PHP/MySQL Nx1 with ELB
+description: >
+             Django environment consisting of a Key Pair, Security Group, an
+             AutoScaler, and a load balancer. Installs the PostgreSQL
+             database on one instance and the Django web framework on any
+             instances created by the autoscaler. Sets up the load balancer to
+             distribute traffic among all Django dev servers, listening at
+             80/tcp, powered by a configurable GitHub repository.
+path: php/mysql/elbnx1
+include: [ aws, base, network, server, puppet, database, application, autoscaler]
+config:
+  network/access_port: 80
+  network/admin_port: 22
+  database/username: mysql_user
+  database/password: changeme123.
+  application/repository_url: git://github.com/opdemand/c2-lamp-php.git
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    components:
+      - type: aws-keypair
+  - name: Network
+    description: Provides network infrastructure
+    components:
+      - type: aws-sg
+  - name: Database
+    description: Provides database services
+    components:
+      - type: aws-instance
+        name: MySQL
+        config:
+          server/hostname: postgres
+          server/build_script: build.sh
+          server/deploy_script: deploy.db.sh
+        output:
+          database/host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 3306
+  - name: Load Balancing
+    description: Provides load balancing services
+    components:
+      - type: aws-elb
+        name: ELB
+        config:
+          lb/listeners: [ "(80, 80, TCP)" ]
+          lb/target: HTTP:80/
+        output:
+          network/access_host: dns_name
+          network/admin_host: dns_name
+          autoscaler/load_balancers: [ lb_name ]
+    #monitor:
+    #  protocol: tcp
+    #  port: 80
+    #  target: dns_name
+  - name: Autoscaler
+    description: Provides autoscaling web services
+    components:
+      - type: aws-autoscaler
+        name: PHP Autoscaler
+        config:
+          server/hostname: php
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+    monitor:
+      protocol: tcp
+      port: 80
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s/admin/

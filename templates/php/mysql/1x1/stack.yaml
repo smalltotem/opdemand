@@ -25,16 +25,16 @@ stack:
     include: [ ]
     components:
       - type: aws-sg
-        include: [ network  ]
+        include: [ network ]
   - name: Database
     description: Provides database services
     include: [ ]
     components:
       - type: aws-instance
-        include: [ database, aws, server, puppet  ]
-        name: MySQL
+        include: [ aws, server, puppet, database ]
+        name: MySQL Server
         config:
-          server/hostname: mysql
+          server/hostname: db
           server/build_script: build.sh
           server/deploy_script: deploy.db.sh
         output:
@@ -47,10 +47,10 @@ stack:
     include: [ ]
     components:
       - type: aws-instance
-        include: [ application, aws, server, puppet  ]
-        name: Nginx
+        include: [ aws, server, puppet, application ]
+        name: Nginx/PHP
         config:
-          server/hostname: nginx
+          server/hostname: app
           server/build_script: build.sh
           server/deploy_script: deploy.app.sh
         output:
@@ -68,4 +68,4 @@ publish:
     template: ssh://ubuntu@%(database/host)s
   - name: Application Admin URL
     description: URL used to administer this service
-    template: ssh://%(network/admin_host)s
+    template: ssh://ubuntu@%(network/admin_host)s

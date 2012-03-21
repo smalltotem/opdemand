@@ -1,0 +1,52 @@
+# -*- test-case-name: c2server.tests.platform.Mongodb1nodeTest -*-
+name: MongoDB 1-node
+description: >
+             Single node MongoDB platform consisting of a Key Pair, Security
+             Group, and an EC2 instance. Installs a MongoDB server listening at
+             27017/tcp, powered by an open-source Puppet module.
+path: mongodb/1node
+include: [ aws, base, network, server, puppet, database ]
+config:
+  network/access_port: 27017
+  network/admin_port: 22
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    include: [ ]
+    components:
+      - type: aws-keypair
+        include: [ ]
+  - name: Network
+    description: Provides network infrastructure
+    include: [ ]
+    components:
+      - type: aws-sg
+        include: [ network ]
+  - name: Database
+    description: Provides database services
+    include: [ ]
+    components:
+      - name: MongoDB
+        include: [ network, server, puppet, aws, database ]
+        description: EC2 instance that runs MongoDB service
+        type: aws-instance
+        config:
+          server/hostname: db
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 27017
+publish:
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/access_host)s:28107
+  - name: SSH URL
+    description: URL used to SSH into the service
+    template: ssh://ubuntu@%(network/admin_host)s
+  - name: Database Access
+    description: Driver URL used to access this service
+    template: mongodb://%(network/access_host)s:%(network/access_port)s

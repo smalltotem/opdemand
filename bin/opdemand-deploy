@@ -12,6 +12,9 @@ else
     cp /var/lib/opdemand/templates/$platform_path/$server_deploy_script /var/cache/opdemand/deploy
 fi
 
+
+echo -e "\n# deploy script additions\n" >> /var/cache/opdemand/deploy
+
 # add in any extra bash commands
 cat >>/var/cache/opdemand/deploy<<EOF
     $server_deploy_addition

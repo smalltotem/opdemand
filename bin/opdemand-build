@@ -13,6 +13,8 @@ else
 fi
 
 
+echo -e "\n# build script additions\n" >> /var/cache/opdemand/build
+
 # add in any extra bash commands
 cat >>/var/cache/opdemand/build<<EOF 
     $server_build_addition

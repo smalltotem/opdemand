@@ -15,6 +15,7 @@ fi
 
 # add in any extra bash commands
 cat >>/var/cache/opdemand/deploy<<EOF
+
     $server_deploy_addition
 EOF
 

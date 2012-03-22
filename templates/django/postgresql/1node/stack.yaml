@@ -50,3 +50,6 @@ publish:
   - name: Admin URL
     description: URL used to administer this service
     template: http://%(network/admin_host)s:%(network/access_port)s/admin/
+  - name: SSH URL
+    description: URL used to administer this server
+    template: ssh://%(network/admin_host)s

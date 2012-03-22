@@ -13,8 +13,6 @@ else
 fi
 
 
-echo -e "\n# deploy script additions\n" >> /var/cache/opdemand/deploy
-
 # add in any extra bash commands
 cat >>/var/cache/opdemand/deploy<<EOF
     $server_deploy_addition

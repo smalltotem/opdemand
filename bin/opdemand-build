@@ -16,7 +16,7 @@ fi
 # add in any extra bash commands
 cat >>/var/cache/opdemand/build<<EOF 
 
-    $server_build_addition
+$server_build_addition
 EOF
 
 

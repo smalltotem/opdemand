@@ -43,9 +43,6 @@ stack:
 publish:
   - name: Admin URL
     description: URL used to administer this service
-    template: http://%(network/access_host)s:28107
-  - name: SSH URL
-    description: URL used to SSH into the service
     template: ssh://ubuntu@%(network/admin_host)s
   - name: Database Access
     description: Driver URL used to access this service

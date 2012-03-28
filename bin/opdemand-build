@@ -28,6 +28,6 @@ chmod +x /var/cache/opdemand/build
 
 if [ -n "${puppet_repository_url}" ]; then
     # link deploy repository to puppet modules directory
-    mkdir -p /usr/share/puppet
+    mkdir -p $puppet_repository_path
     git clone --recursive $puppet_repository_url $puppet_repository_path
 fi

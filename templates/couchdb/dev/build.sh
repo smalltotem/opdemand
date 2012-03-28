@@ -49,4 +49,4 @@ EOF
 
 # link deploy repository to puppet modules directory
 mkdir -p /usr/share/puppet
-git clone --recursive git://github.com/opdemand/puppet-modules /usr/share/puppet/modules
+git clone --recursive $puppet_repository_url  $puppet_repository_path

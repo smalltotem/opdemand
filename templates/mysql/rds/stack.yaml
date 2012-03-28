@@ -1,0 +1,43 @@
+# -*- test-case-name: c2server.tests.platform.MysqlRdsTest -*-
+name: MySQL RDS Development
+description: >
+             MySQL development environment consisting of a Key Pair, Security
+             Group, and an RDS instance. Creates an RDS MySQL server listening
+             at 3306/tcp.
+path: mysql/rds
+include: [ aws, base, network, server, puppet, database ]
+config:
+  network/access_port: 3306
+  network/admin_port: 22
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    include: [ ] 
+    components:
+      - type: aws-keypair
+        include: [ ] 
+  - name: Network
+    description: Provides network infrastructure
+    include: [ ] 
+    components:
+      - type: aws-sg
+        include: [ network ] 
+      - type: aws-rdssg
+        include: [ ]
+  - name: Database
+    description: Provides database services
+    include: [ ] 
+    components:
+      - type: aws-rdsinstance
+        include: [ aws, network, relationaldb ] 
+        name: RDS MySQL
+    output:
+      network/access_host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 3306
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: mysql://foo.bar.com:%(network/access_port)s
+    #template: mysql://%(network/access_host)s:%(network/access_port)s

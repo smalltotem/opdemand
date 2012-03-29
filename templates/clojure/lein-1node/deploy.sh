@@ -12,4 +12,4 @@ fi
 
 # execute puppet apply
 puppet apply $debug_flag -e '
-class {"opdemand::framework::clojure::lein":}'
+class {"opdemand::framework::clojure":}'

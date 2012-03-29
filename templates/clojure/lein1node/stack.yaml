@@ -5,7 +5,7 @@ description: >
              Security Group, and an EC2 instance. Installs Clojure and 
              Lein. Starts the Clojure dev server running at
              8080/tcp, powered by a configurable GitHub repository.
-path: clojure/lein/1node
+path: clojure/lein1node
 include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 8080

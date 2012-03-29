@@ -5,7 +5,7 @@ description: >
              Security Group, and an EC2 instance. Installs Clojure and 
              Lein. Starts the Clojure dev server running at
              8080/tcp, powered by a configurable GitHub repository.
-path: django/postgresql/1node
+path: clojure/lein/1node
 include: [ aws, base, network, server, puppet, database, application ]
 config:
   network/access_port: 8080
@@ -32,7 +32,7 @@ stack:
         include: [ network, aws, server, puppet, database, application ] 
         name: Django/PostgreSQL
         config:
-          server/hostname: django
+          server/hostname: clojure 
           server/build_script: build.sh
           server/deploy_script: deploy.sh
         output:

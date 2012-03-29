@@ -1,4 +1,4 @@
-# -*- test-case-name: c2server.tests.platform.DjangoPostgresql1nodeTest -*-
+# -*- test-case-name: c2server.tests.platform.ClojureLein1nodeTest -*-
 name: Clojure/Lein 1-node
 description: >
              Single node Clojure/Lein environment consisting of a Key Pair,
@@ -30,7 +30,7 @@ stack:
     components:
       - type: aws-instance
         include: [ network, aws, server, puppet, database, application ] 
-        name: Django/PostgreSQL
+        name: Clojure 
         config:
           server/hostname: clojure 
           server/build_script: build.sh

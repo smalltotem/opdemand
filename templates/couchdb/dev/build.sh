@@ -47,6 +47,3 @@ cat > /etc/puppet/hiera.yaml <<EOF
    :datasource: data
 EOF
 
-# link deploy repository to puppet modules directory
-mkdir -p /usr/share/puppet
-git clone --recursive $puppet_repository_url  $puppet_repository_path

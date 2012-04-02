@@ -1,0 +1,53 @@
+# -*- test-case-name: c2server.tests.platform.ClojureLein1nodeTest -*-
+name: Clojure/Lein 1-node
+description: >
+             Single node Clojure/Lein environment consisting of a Key Pair,
+             Security Group, and an EC2 instance. Installs Clojure and 
+             Lein. Starts the Clojure dev server running at
+             8080/tcp, powered by a configurable GitHub repository.
+path: clojure/lein1node
+include: [ aws, base, network, server, puppet, database, application ]
+config:
+  network/access_port: 8080
+  network/admin_port: 22
+  application/repository_url: git://github.com/opdemand/c2-clojure-lein-helloworld.git
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    include: [ ]
+    components:
+      - type: aws-keypair
+        include: [ ]
+  - name: Network
+    description: Provides network infrastructure
+    include: [ ]
+    components:
+      - type: aws-sg
+        include: [ network ]
+  - name: Database
+    description: Provides database services
+    include: [ ] 
+    components:
+      - type: aws-instance
+        include: [ network, aws, server, puppet, database, application ] 
+        name: Clojure 
+        config:
+          server/hostname: clojure 
+          server/build_script: build.sh
+          server/deploy_script: deploy.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 8080
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s:%(network/access_port)s
+  - name: Admin URL
+    description: URL used to administer this service
+    template: http://%(network/admin_host)s:%(network/access_port)s/admin/
+  - name: SSH URL
+    description: URL used to administer this server
+    template: ssh://ubuntu@%(network/admin_host)s

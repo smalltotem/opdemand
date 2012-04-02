@@ -23,3 +23,11 @@ EOF
 # use relative path to find/exec script as root
 chmod +x /var/cache/opdemand/build
 /var/cache/opdemand/build 2>&1 | tee -a /var/log/opdemand/build.log
+
+
+
+if [ -n "${puppet_repository_url}" ]; then
+    # link deploy repository to puppet modules directory
+    mkdir -p $puppet_repository_path
+    git clone --recursive $puppet_repository_url $puppet_repository_path
+fi

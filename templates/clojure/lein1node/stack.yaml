@@ -24,8 +24,8 @@ stack:
     components:
       - type: aws-sg
         include: [ network ]
-  - name: Database
-    description: Provides database services
+  - name: Application
+    description: Application Server
     include: [ ] 
     components:
       - type: aws-instance
@@ -45,9 +45,6 @@ publish:
   - name: Access URL
     description: URL used to access this service
     template: http://%(network/access_host)s:%(network/access_port)s
-  - name: Admin URL
-    description: URL used to administer this service
-    template: http://%(network/admin_host)s:%(network/access_port)s/admin/
   - name: SSH URL
     description: URL used to administer this server
     template: ssh://ubuntu@%(network/admin_host)s

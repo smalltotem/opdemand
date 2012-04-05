@@ -5,7 +5,7 @@ description: >
              Group, and an EC2 instance. Installs the Apache2 web server
              listening at 80/tcp, powered by a configurable GitHub repository.
 path: apache2/dev
-include: [ aws, base, network, server ]
+include: [ aws, base, puppet, network, server ]
 config:
   network/access_port: 80
   network/admin_port: 22
@@ -28,7 +28,7 @@ stack:
     components:
       - type: aws-instance
         name: Apache2
-        include: [ network, server, aws ] 
+        include: [ network, server, aws, puppet ] 
         config:
           server/hostname: apache2
           server/build_script: build.sh

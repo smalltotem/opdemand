@@ -1,5 +1,5 @@
 # -*- test-case-name: c2server.tests.platform.PhpMysqlElbnx1Test -*-
-name: PHP/MySQL Nx1 with ELB (Auto-Scaling)
+name: PHP/MySQL Nx1 with ELB
 description: >
              Django environment consisting of a Key Pair, Security Group, an
              AutoScaler, and a load balancer. Installs the PostgreSQL

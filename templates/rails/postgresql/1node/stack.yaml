@@ -3,15 +3,18 @@ name: Rails/PostgreSQL 1-node
 description: >
              Single node Ruby on Rails environment consisting of a Key Pair,
              Security Group, and an EC2 instance. Installs Rails and a
-             PostgreSQL database. Starts the Rails dev server running at
-             3000/tcp, powered by a configurable GitHub repository.
+             PostgreSQL database. Starts multiple Rails servers powered by
+             Thin with an Nginx-frontend listening at 80/tcp, all
+             powered by a configurable GitHub repositories.
 path: rails/postgresql/1node
 include: [ aws, base, network, server, puppet, database, application ]
 config:
-  network/access_port: 3000
+  network/access_port: 80
   network/admin_port: 22
   database/username: rails
   database/password: changeme123.
+  database/type: postgresql
+  database/port: 5432
   application/repository_url: git://github.com/opdemand/c2-rails-helloworld.git
 stack:
   - name: Security
@@ -32,7 +35,7 @@ stack:
     components:
       - type: aws-instance
         include: [ network, aws, server, puppet, database, application ] 
-        name: Rails/PostgreSQL
+        name: Rails
         config:
           server/hostname: rails
           server/build_script: build.sh
@@ -42,11 +45,11 @@ stack:
           network/admin_host: public_dns_name
     monitor:
       protocol: tcp
-      port: 3000
+      port: 80
 publish:
   - name: Access URL
     description: URL used to access this service
-    template: http://%(network/access_host)s:%(network/access_port)s
+    template: http://%(network/access_host)s
   - name: SSH URL
     description: URL used to administer this server
     template: ssh://ubuntu@%(network/admin_host)s

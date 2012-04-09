@@ -2,7 +2,7 @@
 . /var/cache/opdemand/inputs.sh
 
 # update server repository
-cd $server_repository_path
+cd /var/lib/opdemand
 git pull
 
 # update puppet modules if they exist

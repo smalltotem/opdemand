@@ -1,0 +1,68 @@
+# -*- test-case-name: c2server.tests.platform.RailsPostgresql1x1Test -*-
+name: Rails/PostgreSQL 1x1
+description: >
+             Ruby on Rails environment consisting of a Key Pair, Security Group, and
+             two EC2 instances. Installs the PostgreSQL database on one
+             instance and the Rails web framework on the other, fronted with Thin/Nginx. 
+             Starts the Nginx server running at 80/tcp, all powered by a configurable
+             GitHub repository.
+path: rails/postgresql/1x1
+include: [ aws, base, network, server, puppet, database, application ]
+config:
+  network/access_port: 80
+  network/admin_port: 22
+  database/username: rails
+  database/password: changeme123.
+  database/type: postgresql
+  database/port: 5432
+  application/repository_url: git://github.com/opdemand/c2-rails-helloworld.git
+stack:
+  - name: Security
+    description: Provides security infrastructure
+    include: [ ]
+    components:
+      - type: aws-keypair
+        include: [ ]
+  - name: Network
+    description: Provides network infrastructure
+    include: [ ]
+    components:
+      - type: aws-sg
+        include: [ network  ]
+  - name: Database
+    description: Provides database services
+    include: [ ]
+    components:
+      - type: aws-instance
+        include: [ network, database, aws, server, puppet  ]
+        name: PostgreSQL
+        config:
+          server/hostname: postgres
+          server/build_script: build.sh
+          server/deploy_script: deploy.db.sh
+        output:
+          database/host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 5432
+  - name: Application
+    description: Provides database services
+    include: [ ]
+    components:
+      - type: aws-instance
+        include: [ network, application, aws, server, puppet  ]
+        name: Rails
+        config:
+          server/hostname: rails
+          server/build_script: build.sh
+          server/deploy_script: deploy.app.sh
+        output:
+          network/access_host: public_dns_name
+          network/admin_host: public_dns_name
+    monitor:
+      protocol: tcp
+      port: 80
+publish:
+  - name: Access URL
+    description: URL used to access this service
+    template: http://%(network/access_host)s

@@ -2,11 +2,11 @@
 . /var/cache/opdemand/inputs.sh
 
 # update server repository
-cd /var/lib/opdemand
+cd $server_repository_path
 git pull
 
 # update puppet modules if they exist
-if [ -d /usr/share/puppet/modules ] ; then
-    cd /usr/share/puppet/modules
+if [ -d $puppet_repository_path ] ; then
+    cd $puppet_repository_path
     git pull
 fi
